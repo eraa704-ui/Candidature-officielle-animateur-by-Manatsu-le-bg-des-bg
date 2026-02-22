@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candidature Animateur — AoT RP</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #ff6a00;
+    --orange-bright: #ff9a3c;
+    --orange-glow: #ff7a20;
+    --amber: #ffb347;
+    --black: #000000;
+    --dark: #0a0400;
+    --white: #fff5e6;
+    --grey: #b8906a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--black); color:var(--white); font-family:'Crimson Text',serif; overflow-x:hidden; }
+
+  #fire-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  body::after { content:''; position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px); pointer-events:none; z-index:9999; }
+
+  nav { position:fixed; top:0; width:100%; z-index:100; background:linear-gradient(180deg,rgba(0,0,0,0.98) 0%,transparent 100%); padding:0.5rem 3rem 0.9rem; border-bottom:1px solid rgba(255,106,0,0.12); }
+  .by-line { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:4px; color:rgba(255,106,0,0.35); margin-bottom:0.2rem; }
+  .by-line span { color:var(--orange); text-shadow:0 0 8px var(--orange-glow); }
+  .nav-inner { display:flex; justify-content:center; align-items:center; }
+  .nav-logo { font-family:'Cinzel Decorative',cursive; font-size:0.9rem; color:var(--orange); text-shadow:0 0 20px var(--orange-glow); letter-spacing:3px; }
+
+
+  #hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:8rem 2rem 5rem; z-index:2; }
+  #hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,106,0,0.07) 0%,transparent 70%),radial-gradient(ellipse 100% 40% at 50% 100%,rgba(180,60,0,0.15) 0%,transparent 60%); z-index:-1; }
+
+  .hero-eyebrow { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:7px; color:var(--orange); text-transform:uppercase; margin-bottom:0.8rem; opacity:0; animation:fadeUp 0.8s 0.2s forwards; }
+  .hero-by { font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:5px; color:rgba(255,106,0,0.4); margin-bottom:0.5rem; opacity:0; animation:fadeUp 0.8s 0.35s forwards; }
+  .hero-by span { color:var(--orange); text-shadow:0 0 10px var(--orange-glow); }
+  .hero-title { font-family:'Cinzel Decorative',cursive; font-size:clamp(2rem,7vw,6.5rem); font-weight:900; line-height:0.95; opacity:0; animation:fadeUp 1s 0.5s forwards, flickerFire 6s 2.5s infinite; }
+  .hero-title .t1 { color:var(--white); }
+  .hero-title .t2 { color:var(--orange); text-shadow:0 0 30px var(--orange-glow),0 0 60px rgba(255,106,0,0.4); display:block; }
+  .hero-title .t3 { color:var(--amber); font-size:0.55em; display:block; margin-top:0.3em; letter-spacing:4px; }
+  .hero-divider { width:200px; height:1px; background:linear-gradient(90deg,transparent,var(--orange),transparent); margin:2rem auto; opacity:0; animation:fadeIn 1s 1.2s forwards; box-shadow:0 0 12px var(--orange-glow); }
+  .hero-sub { font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:5px; color:var(--grey); text-transform:uppercase; opacity:0; animation:fadeUp 1s 1s forwards; }
+  .hero-tags { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin-top:2rem; opacity:0; animation:fadeUp 1s 1.4s forwards; }
+  .tag { border:1px solid rgba(255,106,0,0.3); padding:0.35rem 1.2rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:3px; color:var(--orange); text-transform:uppercase; background:rgba(255,106,0,0.04); }
+
+  .section-wrap { position:relative; z-index:2; padding:5rem 2rem; max-width:1000px; margin:0 auto; }
+  .section-header { text-align:center; margin-bottom:3.5rem; }
+  .section-label { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:6px; color:var(--orange); text-transform:uppercase; margin-bottom:0.7rem; display:block; }
+  .section-title { font-family:'Cinzel Decorative',cursive; font-size:clamp(1.4rem,3vw,2.4rem); color:var(--white); }
+  .section-title span { color:var(--orange); text-shadow:0 0 15px var(--orange-glow); }
+  .section-line { width:60px; height:2px; background:var(--orange); margin:1.2rem auto; box-shadow:0 0 8px var(--orange-glow); }
+
+  .id-card { background:linear-gradient(135deg,rgba(20,8,0,0.97),rgba(10,4,0,0.98)); border:1px solid rgba(255,106,0,0.18); padding:3rem; position:relative; overflow:hidden; }
+  .id-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--orange),transparent); box-shadow:0 0 15px var(--orange-glow); }
+  .id-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  .id-item { text-align:center; padding:1rem; border:1px solid rgba(255,106,0,0.08); background:rgba(255,106,0,0.02); }
+  .id-label { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:3px; color:var(--orange); text-transform:uppercase; display:block; margin-bottom:0.4rem; }
+  .id-value { font-size:1.05rem; color:var(--white); }
+  .id-value.hi { color:var(--orange); text-shadow:0 0 8px var(--orange-glow); }
+
+  .qual-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  .qual-card { padding:1.8rem 1.4rem; text-align:center; background:rgba(15,6,0,0.9); border:1px solid rgba(255,106,0,0.1); position:relative; transition:all 0.3s; }
+  .qual-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--orange),transparent); opacity:0; transition:opacity 0.3s; }
+  .qual-card:hover::before { opacity:1; }
+  .qual-card:hover { border-color:rgba(255,106,0,0.3); transform:translateY(-4px); box-shadow:0 10px 30px rgba(255,106,0,0.08); }
+  .qual-icon { font-size:2rem; display:block; margin-bottom:0.8rem; }
+  .qual-title { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:3px; color:var(--orange); text-transform:uppercase; display:block; margin-bottom:0.6rem; }
+  .qual-text { font-size:0.92rem; color:#aa8860; line-height:1.7; }
+
+  .motiv-block { background:rgba(10,4,0,0.92); border:1px solid rgba(255,106,0,0.15); padding:3rem; position:relative; }
+  .motiv-block::before { content:'❝'; font-size:6rem; color:rgba(255,106,0,0.04); position:absolute; top:-1rem; left:1.5rem; font-family:Georgia; line-height:1; }
+  .motiv-text { font-size:1.08rem; line-height:2; color:#c0956a; }
+  .motiv-text p { margin-bottom:1.3rem; }
+  .motiv-text p:last-child { margin-bottom:0; }
+  .motiv-hl { color:var(--orange); font-style:italic; }
+  .motiv-bold { color:var(--amber); }
+
+  .exp-list { display:flex; flex-direction:column; gap:1rem; }
+  .exp-item { display:flex; gap:2rem; align-items:flex-start; padding:1.8rem 2rem; background:rgba(10,4,0,0.85); border:1px solid rgba(255,106,0,0.08); border-left:3px solid rgba(255,106,0,0.5); transition:all 0.3s; }
+  .exp-item:hover { border-left-color:var(--orange); background:rgba(20,8,0,0.9); transform:translateX(5px); }
+  .exp-logo { font-size:2rem; min-width:50px; text-align:center; }
+  .exp-server { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:3px; color:var(--amber); text-transform:uppercase; margin-bottom:0.4rem; display:block; }
+  .exp-role { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:2px; color:rgba(255,106,0,0.6); text-transform:uppercase; margin-bottom:0.6rem; display:block; }
+  .exp-desc { font-size:0.98rem; color:#aa8860; line-height:1.7; }
+  .exp-badge { margin-top:0.6rem; display:inline-block; padding:0.2rem 0.8rem; border:1px solid rgba(255,106,0,0.2); font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:3px; color:var(--orange); text-transform:uppercase; }
+  .exp-badge.big { border-color:rgba(255,179,71,0.4); color:var(--amber); }
+
+  .obj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
+  .obj-item { padding:1.8rem; background:rgba(10,4,0,0.85); border:1px solid rgba(255,106,0,0.08); position:relative; transition:all 0.3s; }
+  .obj-item::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--orange),transparent); opacity:0; transition:opacity 0.3s; }
+  .obj-item:hover::after { opacity:1; }
+  .obj-item:hover { border-color:rgba(255,106,0,0.25); }
+  .obj-num { font-family:'Cinzel Decorative',cursive; font-size:2rem; color:rgba(255,106,0,0.1); line-height:1; margin-bottom:0.5rem; }
+  .obj-title { font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:2px; color:var(--amber); text-transform:uppercase; margin-bottom:0.5rem; }
+  .obj-desc { font-size:0.95rem; color:#aa8860; line-height:1.7; }
+
+  #serment { text-align:center; padding:5rem 2rem; position:relative; z-index:2; }
+  .serment-quote { font-family:'Cinzel Decorative',cursive; font-size:clamp(1rem,2.5vw,1.6rem); color:var(--orange); text-shadow:0 0 20px var(--orange-glow); line-height:1.7; margin-bottom:2rem; }
+  .sig-line { width:100px; height:1px; background:rgba(255,106,0,0.3); margin:0 auto; }
+  .sig-name { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:4px; color:var(--orange); text-transform:uppercase; display:block; margin-top:0.5rem; }
+
+  footer { border-top:1px solid rgba(255,106,0,0.08); padding:2rem; text-align:center; position:relative; z-index:2; }
+  .footer-logo { font-family:'Cinzel Decorative',cursive; font-size:1rem; color:var(--orange); text-shadow:0 0 15px var(--orange-glow); margin-bottom:0.4rem; }
+  .footer-sub { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:4px; color:rgba(255,106,0,0.2); text-transform:uppercase; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes flickerFire {
+    0%,100%{text-shadow:0 0 30px var(--orange-glow),0 0 60px rgba(255,106,0,0.4)}
+    4%{text-shadow:0 0 60px var(--orange-bright),0 0 100px rgba(255,106,0,0.7)}
+    5%{text-shadow:0 0 10px var(--orange-glow)}
+    50%{text-shadow:0 0 40px var(--orange-glow),0 0 70px rgba(255,106,0,0.5)}
+  }
+  .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.8s ease,transform 0.8s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:768px){
+    .id-grid{grid-template-columns:1fr 1fr}
+    .qual-grid{grid-template-columns:1fr}
+    .obj-grid{grid-template-columns:1fr}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+<canvas id="fire-canvas"></canvas>
+
+<nav>
+  <div class="by-line">by <span>Manatsu</span></div>
+  <div class="nav-inner">
+    <div class="nav-logo">🎭 CANDIDATURE ANIMATEUR</div>
+  </div>
+</nav>
+
+<div id="hero">
+  <p class="hero-eyebrow">— Candidature Officielle · AoT RP —</p>
+  <p class="hero-by">by <span>Manatsu</span></p>
+  <h1 class="hero-title">
+    <span class="t1">ANIMATEUR</span>
+    <span class="t2">RP</span>
+    <span class="t3">Attack on Titan · Serveur Roleplay</span>
+  </h1>
+  <p class="hero-sub">Créer · Animer · Faire vivre le RP</p>
+  <div class="hero-divider"></div>
+  <div class="hero-tags">
+    <span class="tag">16 ans</span>
+    <span class="tag">Animateur expérimenté</span>
+    <span class="tag">Multi-serveurs</span>
+    <span class="tag">Passionné AoT</span>
+  </div>
+</div>
+
+<section id="identite" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-label">Fiche Candidat</span>
+    <h2 class="section-title">Mon <span>Profil</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="id-card reveal">
+    <div class="id-grid">
+      <div class="id-item"><span class="id-label">Pseudo</span><span class="id-value hi">Manatsu</span></div>
+      <div class="id-item"><span class="id-label">Âge</span><span class="id-value">16 ans</span></div>
+      <div class="id-item"><span class="id-label">Poste visé</span><span class="id-value hi">Animateur RP</span></div>
+      <div class="id-item"><span class="id-label">Serveur</span><span class="id-value">AoT RP</span></div>
+      <div class="id-item"><span class="id-label">Expérience</span><span class="id-value hi">Multi-serveurs</span></div>
+      <div class="id-item"><span class="id-label">Disponibilité</span><span class="id-value">Régulière</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="qualites" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-label">Ce que j'apporte</span>
+    <h2 class="section-title">Mes <span>Qualités</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="qual-grid">
+    <div class="qual-card reveal">
+      <span class="qual-icon">🎭</span>
+      <span class="qual-title">Créativité</span>
+      <p class="qual-text">J'ai une vrai facilité à inventer des scénarios et des arcs narratifs qui tiennent les joueurs en haleine. Chaque event que j'anime a ses propres enjeux et son univers.</p>
+    </div>
+    <div class="qual-card reveal" style="transition-delay:0.1s">
+      <span class="qual-icon">⚡</span>
+      <span class="qual-title">Réactivité</span>
+      <p class="qual-text">Quand un event commence je m'adapte en temps réel aux actions des joueurs. Aucun scénario figé — tout évolue selon ce que le RP produit naturellement.</p>
+    </div>
+    <div class="qual-card reveal" style="transition-delay:0.2s">
+      <span class="qual-icon">🤝</span>
+      <span class="qual-title">Sens du collectif</span>
+      <p class="qual-text">Un bon animateur travaille en équipe. Je sais coordonner avec le staff et m'assurer que chaque joueur se sente impliqué dans l'histoire, peu importe son rôle.</p>
+    </div>
+    <div class="qual-card reveal" style="transition-delay:0.3s">
+      <span class="qual-icon">📖</span>
+      <span class="qual-title">Maîtrise de l'univers</span>
+      <p class="qual-text">Je connais l'univers AoT en profondeur. La lore, les factions, la géographie de Paradis — chaque event que je crée s'inscrit dans la cohérence du monde Attack on Titan.</p>
+    </div>
+
+    <div class="qual-card reveal" style="transition-delay:0.5s">
+      <span class="qual-icon">🔥</span>
+      <span class="qual-title">Implication totale</span>
+      <p class="qual-text">Je m'investis à fond dans chaque serveur que j'intègre. Pas juste des events ponctuels — je veux m'inscrire dans la durée et contribuer à la vie quotidienne du RP.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-label">Parcours</span>
+    <h2 class="section-title">Mon <span>Expérience</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-logo">⚔️</div>
+      <div>
+        <span class="exp-server">SDA — Jujutsu Kaisen RP</span>
+        <span class="exp-role">Animateur RP · Très gros serveur</span>
+        <p class="exp-desc">SDA c'est vraiment un très gros serveur JJK, y'avait beaucoup de monde et j'ai animé plein d'events là bas. J'ai géré des batailles, des trucs de lore et des events avec genre des dizaines de joueurs en même temps. C'était pas toujours facile mais j'ai appris plein de trucs et les gens aimaient bien ce que je faisais.</p>
+        <span class="exp-badge big">✦ Référence Majeure</span>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-logo">🌑</div>
+      <div>
+        <span class="exp-server">LDS — Naruto RP</span>
+        <span class="exp-role">Animateur RP</span>
+        <p class="exp-desc">Sur LDS qui est un serveur Naruto j'ai fait des events qui duraient sur plusieurs sessions. Genre un event qui commençait un jour et continuait la semaine d'après. C'était cool parce que les joueurs attendaient la suite et ça donnait envie de se connecter pour voir ce qui allait se passer.</p>
+        <span class="exp-badge">Animateur</span>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-logo">🗡️</div>
+      <div>
+        <span class="exp-server">SKR — Dragon Ball RP</span>
+        <span class="exp-role">Animateur RP</span>
+        <p class="exp-desc">SKR c'est Dragon Ball RP et là les combats c'est vraiment le truc principal. J'ai appris à faire des events de combat où tout le monde peut participer même ceux qui ont des personnages moins forts. C'était fun à animer et les joueurs aimaient bien les scènes de baston que je faisais.</p>
+        <span class="exp-badge">Animateur</span>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-logo">🌐</div>
+      <div>
+        <span class="exp-server">Autres Serveurs RP</span>
+        <span class="exp-role">Animateur · Expériences variées</span>
+        <p class="exp-desc">A part ces trois là j'ai aussi animé sur d'autres serveurs RP plus petits. C'était des expériences différentes mais ça m'a quand même appris des trucs. Au final chaque serveur c'est pas pareil et savoir s'adapter c'est important.</p>
+        <span class="exp-badge">Polyvalent</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="motivation" class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-label">Pourquoi moi</span>
+    <h2 class="section-title">Ma <span>Motivation</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="motiv-block reveal">
+    <div class="motiv-text">
+      <p>Honnêtement j'ai toujours aimé AoT, que ce soit l'anime ou le manga. L'univers est vraiment stylé — les titans, les murs, les différentes factions — y'a tellement de trucs à exploiter en RP que ça serait dommage de pas s'en servir pour faire des events qui déchirent.</p>
+      <p>J'ai déjà animé sur <span class="motiv-bold">SDA, LDS et SKR</span> donc je sais ce que c'est de gérer des events avec beaucoup de monde. J'ai fait des erreurs, j'ai appris, et aujourd'hui je me sens vraiment à l'aise pour prendre en main ce genre de poste.</p>
+      <p>Ce qui me plaît dans l'animation c'est vraiment de voir les joueurs kiffer. Quand un event se passe bien et que les gens en parlent encore le lendemain, <span class="motiv-hl">c'est la meilleure récompense qu'il y a</span>. C'est pour ça que je candidate ici — parce que j'ai envie de créer ce genre de moments sur AoT.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-wrap">
+  <div class="section-header reveal">
+    <span class="section-label">Plan d'action</span>
+    <h2 class="section-title">Mes <span>Objectifs</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="obj-grid">
+    <div class="obj-item reveal">
+      <div class="obj-num">01</div>
+      <div class="obj-title">Créer des events immersifs et mémorables</div>
+      <p class="obj-desc">Des scénarios préparés en amont, cohérents avec la lore AoT, avec des fins multiples selon les choix des joueurs. Chaque event doit être une expérience unique.</p>
+    </div>
+    <div class="obj-item reveal" style="transition-delay:0.1s">
+      <div class="obj-num">02</div>
+      <div class="obj-title">Animer des events réguliers</div>
+      <p class="obj-desc">Pas juste des events exceptionnels — une présence régulière qui maintient la communauté active. Des petits events du quotidien autant que des arcs majeurs.</p>
+    </div>
+    <div class="obj-item reveal" style="transition-delay:0.2s">
+      <div class="obj-num">03</div>
+      <div class="obj-title">Travailler en équipe avec le staff</div>
+      <p class="obj-desc">M'intégrer dans la dynamique de l'équipe existante, respecter la vision du serveur et contribuer à sa croissance de façon cohérente avec ce qui a déjà été construit.</p>
+    </div>
+    <div class="obj-item reveal" style="transition-delay:0.3s">
+      <div class="obj-num">04</div>
+      <div class="obj-title">Impliquer tous les joueurs</div>
+      <p class="obj-desc">M'assurer que les events donnent du rôle à tous — pas seulement les plus actifs. Chaque personnage doit avoir sa place dans les histoires que je raconte.</p>
+    </div>
+  </div>
+</section>
+
+<section id="serment">
+  <div class="reveal" style="text-align:center;position:relative;z-index:2;">
+    <div style="width:180px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 3rem;box-shadow:0 0 10px var(--orange-glow);"></div>
+
+    <div style="display:flex;justify-content:center;gap:4rem;margin-top:2rem;">
+      <div><div class="sig-line"></div><span class="sig-name">Manatsu</span></div>
+      <div><div class="sig-line" style="background:rgba(255,179,71,0.3);"></div><span class="sig-name" style="color:var(--amber);">Candidat Animateur</span></div>
+    </div>
+    <div style="width:180px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:3rem auto 0;box-shadow:0 0 10px var(--orange-glow);"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🎭 CANDIDATURE ANIMATEUR</div>
+  <p class="footer-sub">AoT RP · Serveur Roleplay · Attack on Titan</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('fire-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+function rand(a,b){ return Math.random()*(b-a)+a; }
+
+class Ember {
+  constructor(){ this.reset(true); }
+  reset(init){
+    this.x=rand(0,W); this.y=init?rand(0,H):H+10;
+    this.size=rand(0.5,2.5);
+    this.speedY=rand(-1.5,-0.3); this.speedX=rand(-0.4,0.4);
+    this.opacity=rand(0.1,0.6); this.life=rand(0.5,1); this.decay=rand(0.001,0.004);
+    this.hue=rand(15,40);
+  }
+  update(){
+    this.x+=this.speedX+Math.sin(this.y*0.01)*0.2;
+    this.y+=this.speedY; this.life-=this.decay;
+    if(this.y<-10||this.life<=0) this.reset(false);
+  }
+  draw(){
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${this.hue},90%,60%,${this.opacity*this.life})`; ctx.fill();
+  }
+}
+
+class HeatWave {
+  constructor(){ this.reset(); }
+  reset(){
+    this.x=rand(-300,-10); this.y=rand(0,H);
+    this.len=rand(200,600); this.amp=rand(5,30);
+    this.freq=rand(0.006,0.016); this.phase=rand(0,Math.PI*2);
+    this.speed=rand(0.6,2.5); this.opacity=rand(0.02,0.08);
+    this.life=1; this.decay=rand(0.003,0.009); this.hue=rand(15,40);
+  }
+  update(){
+    this.x+=this.speed; this.phase+=0.02; this.life-=this.decay;
+    if(this.x>W+300||this.life<=0) this.reset();
+  }
+  draw(){
+    ctx.beginPath();
+    for(let i=0;i<=this.len;i+=3){
+      const px=this.x+i;
+      const py=this.y+Math.sin(i*this.freq+this.phase)*this.amp;
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle=`hsla(${this.hue},85%,55%,${this.opacity*this.life})`;
+    ctx.lineWidth=rand(0.5,1.5); ctx.lineCap='round'; ctx.stroke();
+  }
+}
+
+const embers = Array.from({length:200},()=>new Ember());
+const waves  = Array.from({length:15}, ()=>new HeatWave());
+
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  waves.forEach(w=>{w.update();w.draw();});
+  embers.forEach(e=>{e.update();e.draw();});
+  requestAnimationFrame(animate);
+}
+animate();
+
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.08});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
